@@ -23,7 +23,7 @@ type ZapConfig struct {
 	Debug             bool `env:"DEBUG"`
 }
 
-// NewLoggerZap creates an new instance of Zap logger
+// NewLoggerZap creates an new instance of Zap logger.
 func NewLoggerZap(config ZapConfig) (*Zap, error) {
 	loggerConfig := zap.NewProductionConfig()
 	loggerConfig.EncoderConfig.TimeKey = "timestamp"
