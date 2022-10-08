@@ -58,6 +58,8 @@ func NewLoggerZap(config ZapConfig) (*Zap, error) {
 }
 
 func fieldsToZap(_ context.Context, fs []Field) []zap.Field {
+	//TODO: use context to get requestID and add info to the log
+
 	zapFields := make([]zap.Field, len(fs), len(fs)+1)
 
 	for i := range fs {
