@@ -1,3 +1,4 @@
+// Package log provides basic implementation for use zap or other log providers.
 package log
 
 import (
