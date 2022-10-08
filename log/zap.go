@@ -23,6 +23,7 @@ type ZapConfig struct {
 	Debug             bool `env:"DEBUG"`
 }
 
+// NewLoggerZap creates an new instance of Zap logger
 func NewLoggerZap(config ZapConfig) (*Zap, error) {
 	loggerConfig := zap.NewProductionConfig()
 	loggerConfig.EncoderConfig.TimeKey = "timestamp"
@@ -35,14 +36,14 @@ func NewLoggerZap(config ZapConfig) (*Zap, error) {
 		loggerConfig.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
 	}
 
-	logger, err := loggerConfig.Build(zap.AddCallerSkip(1))
+	_, err := loggerConfig.Build(zap.AddCallerSkip(1))
 	if err != nil {
 		return nil, errors.Wrap(err, "error on building zap logger")
 	}
 
 	loggerConfig.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 
-	logger = zap.New(
+	logger := zap.New(
 		zapcore.NewCore(
 			zapcore.NewConsoleEncoder(loggerConfig.EncoderConfig),
 			zapcore.AddSync(colorable.NewColorableStdout()),
@@ -55,7 +56,7 @@ func NewLoggerZap(config ZapConfig) (*Zap, error) {
 	}, nil
 }
 
-func fieldsToZap(ctx context.Context, fs []Field) []zap.Field {
+func fieldsToZap(_ context.Context, fs []Field) []zap.Field {
 	zapFields := make([]zap.Field, len(fs), len(fs)+1)
 
 	for i := range fs {
