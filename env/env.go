@@ -1,3 +1,4 @@
+// Package env provides basic implementation for use environment variables with embed.
 package env
 
 import (
